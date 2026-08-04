@@ -1,4 +1,5 @@
 from stats import get_count_words, get_count_characters, chars_dict_to_sorted_list
+import sys
 
 def get_book_text(file_path: str) -> str:
     with open(file_path) as f:
@@ -27,11 +28,16 @@ def print_report(file_path: str, num_words: int, num_characters: list[tuple[str,
 
 
 def main():
-    book = get_book_text("books/frankenstein.txt")
+    if len(sys.argv) != 2:
+        print("Usage: python3 main.py <path_to_book>")
+        sys.exit(1)
+
+    book_path = sys.argv[1]
+    book = get_book_text(book_path)
     num_words = get_count_words(book)
     num_characters = get_count_characters(book)
     num_characters = chars_dict_to_sorted_list(num_characters)
-    print_report("books/frankenstein.txt", num_words, num_characters)
+    print_report(book_path, num_words, num_characters)
 
 
 main()
